@@ -75,6 +75,80 @@ class Board:
         
         return True
     
+    def solve(self, row=0, col=0):
+        """
+        Resuelve el tablero de Sudoku utilizando backtracking
+        
+        Args:
+            row (int): Fila actual (0-3)
+            col (int): Columna actual (0-3)
+            
+        Returns:
+            bool: True si se encontró una solución, False en caso contrario
+        """
+        # Si llegamos al final del tablero, hemos resuelto el Sudoku
+        if row == 4:
+            return True
+        
+        # Calcular la siguiente celda
+        next_row, next_col = (row, col + 1) if col < 3 else (row + 1, 0)
+        
+        # Si la celda ya tiene un valor, pasar a la siguiente
+        if self.board[row][col] != 0:
+            return self.solve(next_row, next_col)
+        
+        # Probar cada número del 1 al 4
+        for num in range(1, 5):
+            if self.is_valid_move(row, col, num):
+                self.board[row][col] = num
+                
+                # Continuar con la siguiente celda
+                if self.solve(next_row, next_col):
+                    return True
+                
+                # Si no se encontró solución, deshacer y probar otro número
+                self.board[row][col] = 0
+        
+        # No se encontró solución
+        return False
+    
+    def generate(self):
+        """
+        Genera un tablero de Sudoku 4x4 aleatorio y completo
+        """
+        # Partir de un tablero vacío
+        self.board = [[0 for _ in range(4)] for _ in range(4)]
+        
+        # Resolver para generar un tablero válido
+        self.solve()
+        
+        # Guardar la solución completa
+        self.solution = copy.deepcopy(self.board)
+    
+    def remove_cells(self, num_cells):
+        """
+        Elimina celdas del tablero para crear el puzzle
+        
+        Args:
+            num_cells (int): Número de celdas a vaciar
+        """
+        # Reiniciar las celdas fijas
+        self.fixed_cells = set()
+        
+        # Lista de todas las posiciones del tablero
+        positions = [(i, j) for i in range(4) for j in range(4)]
+        
+        # Barajar las posiciones
+        random.shuffle(positions)
+        
+        # Seleccionar las celdas a eliminar
+        for i, j in positions[:num_cells]:
+            self.board[i][j] = 0
+        
+        # Registrar las celdas fijas (las que no se eliminaron)
+        for i, j in positions[num_cells:]:
+            self.fixed_cells.add((i, j))
+    
     def is_complete(self):
         """
         Verifica si el tablero está completo (sin celdas vacías)
