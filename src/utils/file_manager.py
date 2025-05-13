@@ -69,4 +69,6 @@ class FileManager:
         
         # Mantener solo los 5 mejores puntajes
         highscores = highscores[:5]
+        
+        # Guardar la lista actualizada
         self.save_highscores(highscores)
