@@ -53,23 +53,19 @@ sudoku/
 ├── src/
 │   ├── __init__.py
 │   ├── board/
-│   │   ├── __init__.py
 │   │   ├── board.py          # Lógica y manejo del tablero (T-03, T-04, T-06)
 │   │   └── visualization.py  # Visualización del tablero (T-05)
 │   ├── game/
-│   │   ├── __init__.py
 │   │   ├── difficulty.py     # Sistema de dificultad (T-07)
 │   │   ├── game.py           # Lógica de juego (T-08)
 │   │   └── scoring.py        # Sistema de puntuación (T-10)
 │   ├── menu/
-│   │   ├── __init__.py
 │   │   └── menu.py           # Menú principal (T-09, T-12)
 │   └── utils/
 │       ├── __init__.py
 │       ├── constants.py      # Constantes y configuración (T-02)
 │       └── file_manager.py   # Gestión de archivos (T-11)
 ├── tests/
-│   ├── __init__.py
 │   └── test_integration.py  # Pruebas de integración (T-14)
 └── data/
     └── highscores.json      # Archivo de mejores puntajes
